@@ -8,18 +8,18 @@ app = Flask(__name__)
 conn = 'mongodb://localhost:27017'
 client = pymongo.MongoClient(conn)
 db = client.classDB
-mars = db.mars
+mars = db.mars.find_one()
 
 @app.route("/")
 def index():
     mars_info = db.mars.find_one()
 
-    return render_template("index.html", mars_info=mars_info)
+    return render_template("templates/index.html", mars_dict=mars_dict)
 
 
 @app.route("/scrape")
 def scrape():
-    mars_info = db.mars
+    mars_info = db.mars.find_one()
     mars_data = scrape_mars.Scrape()
     mars_info.update(
         {},
